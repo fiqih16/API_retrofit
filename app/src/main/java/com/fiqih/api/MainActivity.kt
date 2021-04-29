@@ -1,9 +1,11 @@
 package com.fiqih.api
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
@@ -49,8 +51,9 @@ class MainActivity : AppCompatActivity() {
         }
     })
 
-        //Method Tambah data
     }
+
+    //Method Tambah data
     fun addRecord() {
         val nama = etNama.text.toString()
         val namapt = etPT.text.toString()
@@ -88,4 +91,46 @@ class MainActivity : AppCompatActivity() {
             })
         }
     }
+
+    // Untuk menampilkan dialog delete
+    fun deleteRecordDialog(CEOModel: CEOModel?){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Berhasil Dihapus")
+
+        builder.setMessage("Apa Kamu Yakin?")
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+        builder.setPositiveButton("Ya"){dialog, which: Int ->
+            var apiInterface: ApiInterface =
+                ApiClient().getApiClient()!!.create(ApiInterface::class.java)
+
+            var requestCall: Call<CEOModel> = apiInterface.deleteCEO(CEOModel?.id!!)
+            requestCall.enqueue(object : Callback<CEOModel>{
+                override fun onResponse(call: Call<CEOModel>, response: Response<CEOModel>) {
+                    if(response.isSuccessful){
+                        Toast.makeText(this@MainActivity,
+                            "Berhasil terhapus", Toast.LENGTH_LONG).show()
+                        setupListOfDataIntoRecyclerView()
+                    }
+                }
+
+                override fun onFailure(call: Call<CEOModel>, t: Throwable) {
+                    Toast.makeText(this@MainActivity,
+                        "Gagal Terhapus", Toast.LENGTH_LONG).show()
+                }
+
+            })
+        }
+
+
+        builder.setNegativeButton("No"){dialog, which: Int->
+            dialog?.dismiss()
+        }
+        builder.show()
+    }
+
+    fun updateRecordDialog(CEOModel: CEOModel?){
+
+    }
+
 }

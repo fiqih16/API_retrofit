@@ -8,7 +8,7 @@
     android:padding="10dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 <LinearLayout
@@ -26,73 +26,75 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="0dp"
             android:text=":"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="Nama"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="16dp"
+        android:layout_height="wrap_content"
+
+        android:layout_weight="1"
+        android:text="Nama"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
         <TextView
             android:id="@+id/tvCompanyName"
-            android:layout_width="wrap_content"
+            android:layout_width="20dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+
+            android:layout_weight="1"
             android:text="Nama Company"
             android:textColor="@color/black"
             android:textSize="16sp" />
 </LinearLayout>
-<!--<LinearLayout-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:orientation="horizontal"/>-->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"/>
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal"/>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"/>
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal"/>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"/>
 
     </LinearLayout>
 
-<!--    <ImageView-->
-<!--        android:id="@+id/iv_detail"-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:contentDescription="Image"-->
-<!--        android:foreground="?attr/selectableItemBackground"-->
-<!--        android:scaleType="center"-->
-<!--        android:src="@android:drawable/ic_menu_more"/>-->
+    <ImageView
+        android:id="@+id/iv_detail"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:contentDescription="Image"
+        android:foreground="?attr/selectableItemBackground"
+        android:scaleType="center"
+        android:src="@android:drawable/ic_menu_more"/>
 
-<!--    <ImageView-->
-<!--        android:id="@+id/iv_edit"-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:contentDescription="Image"-->
-<!--        android:foreground="?attr/selectableItemBackground"-->
-<!--        android:scaleType="center"-->
-<!--        android:src="@android:drawable/ic_menu_edit"/>-->
+    <ImageView
+        android:id="@+id/iv_edit"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:contentDescription="Image"
+        android:foreground="?attr/selectableItemBackground"
+        android:scaleType="center"
+        android:src="@android:drawable/ic_menu_edit"/>
 
-<!--    <ImageView-->
-<!--        android:id="@+id/iv_delete"-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:contentDescription="Image"-->
-<!--        android:foreground="?attr/selectableItemBackground"-->
-<!--        android:scaleType="center"-->
-<!--        android:src="@android:drawable/ic_menu_delete"/>-->
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:contentDescription="Image"
+        android:foreground="?attr/selectableItemBackground"
+        android:scaleType="center"
+        android:src="@android:drawable/ic_menu_delete"/>
 
 
 </LinearLayout>

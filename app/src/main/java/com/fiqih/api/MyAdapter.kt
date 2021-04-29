@@ -14,6 +14,8 @@ class MyAdapter (val context: Context, var dataList: ArrayList<CEOModel>?): Recy
         val tvId = view.tvId
         val tvName = view.tvName
         val tvCompanyName = view.tvCompanyName
+        val ivEdit = view.iv_edit
+        val ivDelete = view.iv_delete
     }
 
     // method untuk membuat view holder
@@ -40,8 +42,19 @@ class MyAdapter (val context: Context, var dataList: ArrayList<CEOModel>?): Recy
         } else {
             holder.llMain.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
         }
-    }
 
+        holder.ivEdit.setOnClickListener {
+            if(context is MainActivity){
+//                context.updateRecordDialog(item)
+            }
+        }
+        holder.ivDelete.setOnClickListener{
+            if (context is MainActivity) {
+                context.deleteRecordDialog(item!!)
+            }
+        }
+
+    }
 }
 
 
