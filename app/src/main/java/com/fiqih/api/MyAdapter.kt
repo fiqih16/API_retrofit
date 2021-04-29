@@ -45,7 +45,7 @@ class MyAdapter (val context: Context, var dataList: ArrayList<CEOModel>?): Recy
 
         holder.ivEdit.setOnClickListener {
             if(context is MainActivity){
-//                context.updateRecordDialog(item)
+                context.updateRecordDialog(item!!)
             }
         }
         holder.ivDelete.setOnClickListener{

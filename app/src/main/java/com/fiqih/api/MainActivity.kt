@@ -1,5 +1,6 @@
 package com.fiqih.api
 
+import android.app.Dialog
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.update_dialog.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -129,7 +131,58 @@ class MainActivity : AppCompatActivity() {
         builder.show()
     }
 
+    // Method to show custome dialog
     fun updateRecordDialog(CEOModel: CEOModel?){
+        val updateDialog = Dialog(this,R.style.Theme_Dialog)
+        updateDialog.setCancelable(false)
+        updateDialog.setContentView(R.layout.update_dialog)
+
+        updateDialog.etUpName.setText(CEOModel?.name)
+        updateDialog.etUpNamePt.setText(CEOModel?.company_name)
+
+        updateDialog.tvUpdate.setOnClickListener {
+            val name = updateDialog.etUpName.text.toString()
+            val companyName = updateDialog.etUpNamePt.text.toString()
+
+            if(name.isEmpty() && companyName.isEmpty()){
+                Toast.makeText(this,
+                "Masih Ada Field yang kosong, tolong lengkapi",
+                Toast.LENGTH_LONG).show()
+            }else{
+                val newCEO : CEOModel = CEOModel(null, name, companyName)
+
+                var apiInterface: ApiInterface = ApiClient().getApiClient()!!.create(ApiInterface::class.java)
+                var requestCall : Call<CEOModel> = apiInterface.updateCEO(newCEO, CEOModel?.id!!)
+
+                requestCall.enqueue(object : Callback<CEOModel>{
+
+                    override fun onResponse(call: Call<CEOModel>, response: Response<CEOModel>) {
+                        if(response.isSuccessful){
+                            Toast.makeText(this@MainActivity,
+                                "Berhasil tersimpan", Toast.LENGTH_LONG).show()
+                            setupListOfDataIntoRecyclerView()
+                            etNama.setText("")
+                            etPT.setText("")
+                            updateDialog.dismiss()
+                        }else{
+                            Toast.makeText(this@MainActivity,
+                                "Gagal tersimpan", Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<CEOModel>, t: Throwable) {
+                        Toast.makeText(this@MainActivity,
+                            "Gagal tersimpan", Toast.LENGTH_LONG).show()
+
+                    }
+
+                })
+            }
+        }
+        updateDialog.tvCancel.setOnClickListener{
+            updateDialog.dismiss()
+        }
+        updateDialog.show()
 
     }
 
