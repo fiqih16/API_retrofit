@@ -1,20 +1,14 @@
 package com.fiqih.api
 
-import android.app.Dialog
-import android.content.Context
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.telecom.Call
 import android.view.View
-import android.view.inputmethod.InlineSuggestionsResponse
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
-import javax.security.auth.callback.Callback
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +16,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setupListOfDataIntoRecyclerView()
+        btnR.setOnClickListener{
+            addRecord()
+        }
         }
 
     fun setupListOfDataIntoRecyclerView() {
@@ -33,11 +30,11 @@ class MainActivity : AppCompatActivity() {
     apiInterface.getCEOs().enqueue(object : retrofit2.Callback<ArrayList<CEOModel>> {
 
 
-        override fun onFailure(call: retrofit2.Call<ArrayList<CEOModel>>?, t: Throwable) {
+        override fun onFailure(call: Call<ArrayList<CEOModel>>?, t: Throwable) {
             Toast.makeText(baseContext, "Data downloading is failed", Toast.LENGTH_LONG).show()
         }
 
-        override fun onResponse(call: retrofit2.Call<ArrayList<CEOModel>>?, response: Response<ArrayList<CEOModel>>?) {
+        override fun onResponse(call: Call<ArrayList<CEOModel>>?, response: Response<ArrayList<CEOModel>>?) {
             var ceoData = response?.body()!!
             if (ceoData.size > 0) {
                 rv_item.visibility = View.VISIBLE
@@ -52,5 +49,43 @@ class MainActivity : AppCompatActivity() {
         }
     })
 
+        //Method Tambah data
+    }
+    fun addRecord() {
+        val nama = etNama.text.toString()
+        val namapt = etPT.text.toString()
+
+        if (nama == "" || namapt == ""){
+            Toast.makeText(this,
+                "Masih ada kolom yang kosong", Toast.LENGTH_LONG).show()
+        }else{
+            val newCEO : CEOModel = CEOModel(null, nama, namapt)
+
+            var apiInterface: ApiInterface = ApiClient().getApiClient()!!.create(ApiInterface::class.java)
+            var requestCall : Call<CEOModel> = apiInterface.addCEO(newCEO)
+
+            requestCall.enqueue(object : Callback<CEOModel>{
+
+                override fun onResponse(call: Call<CEOModel>, response: Response<CEOModel>) {
+                    if(response.isSuccessful){
+                        Toast.makeText(this@MainActivity,
+                            "Berhasil tersimpan", Toast.LENGTH_LONG).show()
+                        setupListOfDataIntoRecyclerView()
+                        etNama.setText("")
+                        etPT.setText("")
+                    }else{
+                        Toast.makeText(this@MainActivity,
+                            "Gagal tersimpan", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<CEOModel>, t: Throwable) {
+                    Toast.makeText(this@MainActivity,
+                        "Gagal tersimpan", Toast.LENGTH_LONG).show()
+
+                }
+
+            })
+        }
     }
 }
