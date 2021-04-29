@@ -1,10 +1,12 @@
 package com.fiqih.api
 
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         setupListOfDataIntoRecyclerView()
         btnR.setOnClickListener{
             addRecord()
+            closeKeyboard()
         }
         }
 
@@ -164,6 +167,7 @@ class MainActivity : AppCompatActivity() {
                             etNama.setText("")
                             etPT.setText("")
                             updateDialog.dismiss()
+                            closeKeyboard()
                         }else{
                             Toast.makeText(this@MainActivity,
                                 "Gagal tersimpan", Toast.LENGTH_LONG).show()
@@ -184,6 +188,15 @@ class MainActivity : AppCompatActivity() {
         }
         updateDialog.show()
 
+    }
+
+    // method to close keyboard
+    private fun closeKeyboard(){
+        val view = this.currentFocus
+        if (view!= null){
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken,0)
+        }
     }
 
 }
